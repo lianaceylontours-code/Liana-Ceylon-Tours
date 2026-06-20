@@ -139,17 +139,18 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   position: relative;
-}
-
-.pricing-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  max-width: 380px; /* Added max-width constraint */
+  margin: 0 auto; /* Center the card */
 }
 
 .pricing-card.popular {
   border: 2px solid #007bf7;
   transform: scale(1.03);
+  max-width: 400px; /* Slightly larger for popular card */
 }
+
+/* Rest of the CSS remains unchanged */
+
 
 .pricing-card.popular:hover {
   transform: scale(1.03) translateY(-10px);
