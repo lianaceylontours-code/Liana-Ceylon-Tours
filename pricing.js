@@ -1,90 +1,45 @@
-// Pricing Page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
+  // Format price function (was missing)
+  function formatPrice(price) {
+    return `$${price}`;
+  }
+
   // Populate prices from centralized data
   function updatePricingUI() {
-    // Update Essential package
-    document.getElementById('package-essential-name').textContent = pricingData.packages.essential.name;
-    document.getElementById('package-essential-price').textContent = formatPrice(pricingData.packages.essential.price);
-    document.getElementById('package-essential-duration').textContent = pricingData.packages.essential.duration;
-    document.getElementById('package-essential-desc').textContent = pricingData.packages.essential.description;
-    
     // Update Classic package
-    document.getElementById('package-classic-name').textContent = pricingData.packages.classic.name;
-    document.getElementById('package-classic-price').textContent = formatPrice(pricingData.packages.classic.price);
-    document.getElementById('package-classic-duration').textContent = pricingData.packages.classic.duration;
-    document.getElementById('package-classic-desc').textContent = pricingData.packages.classic.description;
-    
-    // Update Luxury package
-    document.getElementById('package-luxury-name').textContent = pricingData.packages.luxury.name;
-    document.getElementById('package-luxury-price').textContent = formatPrice(pricingData.packages.luxury.price);
-    document.getElementById('package-luxury-duration').textContent = pricingData.packages.luxury.duration;
-    document.getElementById('package-luxury-desc').textContent = pricingData.packages.luxury.description;
+    document.getElementById('package-classic-name').textContent = "Heritage & Nature Escape";
+    document.getElementById('package-classic-price').textContent = formatPrice(70);
+    document.getElementById('package-classic-duration').textContent = "Per day";
+    document.getElementById('package-classic-desc').textContent = "Experience Sri Lanka's top cultural and natural attractions with our bestselling tour package just $70 per day!";
   }
 
   // Call this function when the page loads
   updatePricingUI();
   
-  // Filter functionality for pricing packages
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const pricingCards = document.querySelectorAll('.pricing-card');
-  
-  filterButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      // Remove active class from all buttons
-      filterButtons.forEach(btn => btn.classList.remove('active'));
-      
-      // Add active class to clicked button
-      this.classList.add('active');
-      
-      const filterValue = this.getAttribute('data-filter');
-      
-      // Show/hide pricing cards based on filter
-      pricingCards.forEach(card => {
-        if (filterValue === 'all') {
-          card.style.display = 'block';
-          setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          }, 10);
-        } else if (card.classList.contains(filterValue)) {
-          card.style.display = 'block';
-          setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          }, 10);
-        } else {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(20px)';
-          setTimeout(() => {
-            card.style.display = 'none';
-          }, 300);
-        }
-      });
-    });
-  });
-  
-  // FAQ accordion functionality
+  // FAQ accordion functionality - Fixed implementation
   const faqItems = document.querySelectorAll('.faq-item');
   
   faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
     
     question.addEventListener('click', () => {
-      // Close all other FAQ items
-      faqItems.forEach(otherItem => {
-        if (otherItem !== item && otherItem.classList.contains('active')) {
-          otherItem.classList.remove('active');
-        }
-      });
-      
       // Toggle current item
       item.classList.toggle('active');
+      
+      // Close other FAQ items when opening one
+      if (item.classList.contains('active')) {
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item && otherItem.classList.contains('active')) {
+            otherItem.classList.remove('active');
+          }
+        });
+      }
     });
   });
   
   // Animation for elements on scroll
   function animateOnScroll() {
-    const elements = document.querySelectorAll('.pricing-card, .included-item, .custom-tour');
+    const elements = document.querySelectorAll('.pricing-card, .included-item');
     
     elements.forEach(element => {
       const elementTop = element.getBoundingClientRect().top;
@@ -98,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Initialize animation styles
-  const animatedElements = document.querySelectorAll('.pricing-card, .included-item, .custom-tour');
+  const animatedElements = document.querySelectorAll('.pricing-card, .included-item');
   animatedElements.forEach(element => {
     element.style.opacity = '0';
     element.style.transform = 'translateY(20px)';
