@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book Your Tour - Liana Ceylon Tours</title>
+  <title>Book Your Tour - Liana Ceylon Tours And Travels</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="mobile-menu.css">
   <link rel="stylesheet" href="pricing.css">
@@ -233,13 +233,12 @@
 
   <!-- Navbar -->
   <nav>
-    <div class="logo"><i class="fas fa-map-marked-alt"></i> Liana Ceylon Tours</div>
+    <div class="logo"><i class="fas fa-map-marked-alt"></i> Liana Ceylon Tours And Travels</div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="pricing.html">Pricing</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="burger">
       <div class="line1"></div>
@@ -256,8 +255,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </div>
   </div>
@@ -265,7 +263,7 @@
   <!-- Booking Header -->
   <section class="booking-header">
     <div class="booking-hero">
-      <h1>Book Your Tour With Liana Ceylon Tours</h1>
+      <h1>Liana Ceylon Tours – Your Journey Begins Here</h1>
       <p>Complete the form below to secure your tour package</p>
     </div>
   </section>
@@ -290,7 +288,7 @@
         
         <form id="bookingForm" method="POST">
           <!-- Web3Forms Access Key - Replace with your actual key -->
-          <input type="hidden" name="access_key" value="0712f9d2-3034-4584-9cb9-88a84c1bce3a">
+          <input type="hidden" name="access_key" value="241e7d79-b1b8-44f2-91da-36b0092a3482">
           <input type="hidden" name="subject" value="New Tour Booking Request from Liana Ceylon Tours">
           <input type="hidden" name="from_name" value="Liana Ceylon Tours Booking">
           <input type="checkbox" name="botcheck" style="display: none;">
@@ -313,10 +311,10 @@
           
           <div class="form-group">
             <label for="package">Select Tour Package *</label>
-            <select class="form-control" id="package" name="Tour Package" required>
-              <option value="Essential Sri Lanka - $499/5 days">Essential Sri Lanka - $500/5 days</option>
-              <option value="Classic Explorer - $899/8 days" selected>Classic Explorer - $899/8 days</option>
-              <option value="Luxury Escape - $1599/12 days">Luxury Escape - $1599/12 days</option>
+          <select class="form-control" id="package" name="Tour Package" required>
+            <option value="Classic Explorer - $70/Per 1 day" selected>Classic Explorer - $70/Per 1 day</option>
+          </select>
+              
             </select>
           </div>
           
@@ -396,10 +394,7 @@
   <!-- Footer -->
   <footer>
     <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="#"><i class="fab fa-tripadvisor"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=61581095183077"><i class="fab fa-facebook"></i></a>
     </div>
     <p>© 2025 Liana Ceylon Tours | All Rights Reserved</p>
   </footer>
@@ -410,32 +405,25 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Function to update package options from centralized data
-      function updatePackageOptions() {
-        const packageSelect = document.getElementById('package');
-        
-        // Clear existing options
-        packageSelect.innerHTML = '';
-        
-        // Add options from centralized data
-        const packages = pricingData.packages;
-        const options = [
-          `${packages.essential.name} - ${formatPrice(packages.essential.price)}/${packages.essential.duration}`,
-          `${packages.classic.name} - ${formatPrice(packages.classic.price)}/${packages.classic.duration}`,
-          `${packages.luxury.name} - ${formatPrice(packages.luxury.price)}/${packages.luxury.duration}`
-        ];
-        
-        options.forEach((optionText, index) => {
-          const option = document.createElement('option');
-          option.value = optionText;
-          option.textContent = optionText;
-          // Set the second option as selected by default
-          if (index === 1) option.selected = true;
-          packageSelect.appendChild(option);
-        });
-        
-        // Update summary with the default selected option
-        updateSummary();
-      }
+function updatePackageOptions() {
+  const packageSelect = document.getElementById('package');
+  
+  // Clear existing options
+  packageSelect.innerHTML = '';
+  
+  // Add options from centralized data (only classic package)
+  const packages = pricingData.packages;
+  const optionText = `${packages.classic.name} - ${formatPrice(packages.classic.price)}/${packages.classic.duration}`;
+  
+  const option = document.createElement('option');
+  option.value = optionText;
+  option.textContent = optionText;
+  option.selected = true;
+  packageSelect.appendChild(option);
+  
+  // Update summary with the default selected option
+  updateSummary();
+}
       
       // Function to update the booking summary
       function updateSummary() {
