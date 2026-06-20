@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Tour - Liana Ceylon Tours</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="mobile-menu.css">
+  <link rel="stylesheet" href="pricing.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Booking Page Specific Styles */
+    .booking-header {
+      background: linear-gradient(135deg, #007bf7 0%, #003366 100%);
+      color: white;
+      padding: 100px 10% 80px;
+      text-align: center;
+      margin-top: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .booking-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+      background-size: cover;
+    }
+
+    .booking-hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      animation: fadeInUp 1s ease;
+    }
+
+    .booking-content {
+      padding: 80px 0;
+      background: #f8f9fa;
+      position: relative;
+    }
+
+    .booking-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L0,100 Z" fill="rgba(0,123,247,0.03)"/></svg>');
+      background-size: cover;
+      pointer-events: none;
+    }
+
+    .booking-form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-title {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+      font-size: 2rem;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .form-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, #007bf7, #003366);
+      border-radius: 2px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #007bf7;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 123, 247, 0.1);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .form-col {
+      flex: 1;
+    }
+
+    .booking-summary {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 30px;
+    }
+
+    .booking-summary h3 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .summary-label {
+      color: #6c757d;
+    }
+
+    .summary-value {
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #007bf7, #003366);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 123, 247, 0.4);
+    }
+
+    .form-notice {
+      text-align: center;
+      margin-top: 20px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 30px;
+      background: #d4edda;
+      color: #155724;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .success-message i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .error-message {
+      display: none;
+      text-align: center;
+      padding: 15px;
+      background: #f8d7da;
+      color: #721c24;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .booking-header {
+        padding: 80px 5% 60px;
+      }
+      
+      .booking-hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .booking-form-container {
+        padding: 30px 20px;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo"><i class="fas fa-map-marked-alt"></i> Liana Ceylon Tours</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="burger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay">
+    <div class="mobile-nav">
+      <button class="close-btn"><i class="fas fa-times"></i></button>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Booking Header -->
+  <section class="booking-header">
+    <div class="booking-hero">
+      <h1>Book Your Tour With Liana Ceylon Tours</h1>
+      <p>Complete the form below to secure your tour package</p>
+    </div>
+  </section>
+
+  <!-- Booking Content -->
+  <section class="booking-content">
+    <div class="container">
+      <div class="booking-form-container">
+        <h2 class="form-title">Tour Booking Form</h2>
+        
+        <div id="successMessage" class="success-message">
+          <i class="fas fa-check-circle"></i>
+          <h3>Thank You for Your Booking!</h3>
+          <p>We've received your information and will contact you shortly to confirm your tour details.</p>
+        </div>
+
+        <div id="errorMessage" class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          <h3>Submission Error</h3>
+          <p id="errorText">There was a problem submitting your form. Please try again.</p>
+        </div>
+        
+        <form id="bookingForm" method="POST">
+          <!-- Web3Forms Access Key - Replace with your actual key -->
+          <input type="hidden" name="access_key" value="0712f9d2-3034-4584-9cb9-88a84c1bce3a">
+          <input type="hidden" name="subject" value="New Tour Booking Request from Liana Ceylon Tours">
+          <input type="hidden" name="from_name" value="Liana Ceylon Tours Booking">
+          <input type="checkbox" name="botcheck" style="display: none;">
+          
+          <div class="booking-summary">
+            <h3>Booking Summary</h3>
+            <div class="summary-item">
+              <span class="summary-label">Selected Package:</span>
+              <span id="summaryPackage" class="summary-value">Essential Sri Lanka</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Package Price:</span>
+              <span id="summaryPrice" class="summary-value">$500</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Duration:</span>
+              <span id="summaryDuration" class="summary-value">5 days</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="package">Select Tour Package *</label>
+            <select class="form-control" id="package" name="Tour Package" required>
+              <option value="Essential Sri Lanka - $499/5 days">Essential Sri Lanka - $500/5 days</option>
+              <option value="Classic Explorer - $899/8 days" selected>Classic Explorer - $899/8 days</option>
+              <option value="Luxury Escape - $1599/12 days">Luxury Escape - $1599/12 days</option>
+            </select>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-col">
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" class="form-control" id="firstName" name="First Name" required>
+              </div>
+            </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" class="form-control" id="lastName" name="Last Name" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-col">
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" class="form-control" id="email" name="Email" required>
+              </div>
+            </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" class="form-control" id="phone" name="Phone" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="country">Country *</label>
+            <input type="text" class="form-control" id="country" name="Country" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="participants">Number of Participants *</label>
+            <select class="form-control" id="participants" name="Number of Participants" required>
+              <option value="1">1 Person</option>
+              <option value="2" selected>2 People</option>
+              <option value="3">3 People</option>
+              <option value="4">4 People</option>
+              <option value="5+">5+ People (Please specify in message)</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="startDate">Preferred Start Date *</label>
+            <input type="date" class="form-control" id="startDate" name="Preferred Start Date" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Additional Message</label>
+            <textarea class="form-control" id="message" name="Additional Message" rows="4" placeholder="Any special requests or questions..."></textarea>
+          </div>
+          
+          <button type="submit" class="btn-submit">Submit Booking Request</button>
+        </form>
+        
+        <p class="form-notice">We'll contact you within 24 hours to confirm your booking and discuss payment options.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to Pricing -->
+  <section class="back-to-home">
+    <div class="container">
+      <a href="pricing.html" class="btn">
+        <i class="fas fa-arrow-left"></i> Back to Pricing
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-tripadvisor"></i></a>
+    </div>
+    <p>© 2025 Liana Ceylon Tours | All Rights Reserved</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="mobile-menu.js"></script>
+  <script src="pricing-data.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to update package options from centralized data
+      function updatePackageOptions() {
+        const packageSelect = document.getElementById('package');
+        
+        // Clear existing options
+        packageSelect.innerHTML = '';
+        
+        // Add options from centralized data
+        const packages = pricingData.packages;
+        const options = [
+          `${packages.essential.name} - ${formatPrice(packages.essential.price)}/${packages.essential.duration}`,
+          `${packages.classic.name} - ${formatPrice(packages.classic.price)}/${packages.classic.duration}`,
+          `${packages.luxury.name} - ${formatPrice(packages.luxury.price)}/${packages.luxury.duration}`
+        ];
+        
+        options.forEach((optionText, index) => {
+          const option = document.createElement('option');
+          option.value = optionText;
+          option.textContent = optionText;
+          // Set the second option as selected by default
+          if (index === 1) option.selected = true;
+          packageSelect.appendChild(option);
+        });
+        
+        // Update summary with the default selected option
+        updateSummary();
+      }
+      
+      // Function to update the booking summary
+      function updateSummary() {
+        const packageSelect = document.getElementById('package');
+        const selectedOption = packageSelect.options[packageSelect.selectedIndex];
+        const value = selectedOption.value;
+        
+        // Extract package name, price and duration
+        const parts = value.split(' - ');
+        const packageName = parts[0];
+        const priceDuration = parts[1].split('/');
+        const price = priceDuration[0];
+        const duration = priceDuration[1];
+        
+        // Update summary
+        document.getElementById('summaryPackage').textContent = packageName;
+        document.getElementById('summaryPrice').textContent = price;
+        document.getElementById('summaryDuration').textContent = duration;
+      }
+      
+      // Initialize package options and summary
+      updatePackageOptions();
+      
+      // Update summary when package changes
+      document.getElementById('package').addEventListener('change', updateSummary);
+      
+      // Get URL parameters to pre-fill package information
+      const urlParams = new URLSearchParams(window.location.search);
+      const packageParam = urlParams.get('package');
+      
+      if (packageParam) {
+        const packageSelect = document.getElementById('package');
+        for (let i = 0; i < packageSelect.options.length; i++) {
+          if (packageSelect.options[i].value.includes(packageParam)) {
+            packageSelect.selectedIndex = i;
+            updateSummary();
+            break;
+          }
+        }
+      }
+      
+      // Set minimum date for date picker to today
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      let mm = today.getMonth() + 1;
+      let dd = today.getDate();
+      
+      if (mm < 10) mm = '0' + mm;
+      if (dd < 10) dd = '0' + dd;
+      
+      const minDate = `${yyyy}-${mm}-${dd}`;
+      document.getElementById('startDate').min = minDate;
+      
+      // Handle form submission
+      const bookingForm = document.getElementById('bookingForm');
+      const successMessage = document.getElementById('successMessage');
+      const errorMessage = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      
+      bookingForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Reset messages
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+        
+        // Simple form validation
+        const requiredFields = bookingForm.querySelectorAll('[required]');
+        let valid = true;
+        
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            field.style.borderColor = 'red';
+            valid = false;
+          } else {
+            field.style.borderColor = '#e9ecef';
+          }
+        });
+        
+        if (!valid) {
+          errorText.textContent = 'Please fill in all required fields.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+        
+        // Show loading state
+        const submitButton = bookingForm.querySelector('.btn-submit');
+        const originalButtonText = submitButton.textContent;
+        submitButton.textContent = 'Submitting...';
+        submitButton.disabled = true;
+        
+        // Create form data
+        const formData = new FormData(bookingForm);
+        
+        // Send the data to Web3Forms
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Show success message and hide form
+            bookingForm.style.display = 'none';
+            successMessage.style.display = 'block';
+          } else {
+            // Show error message
+            errorText.textContent = data.message || 'There was an error submitting your form. Please try again.';
+            errorMessage.style.display = 'block';
+            
+            // Reset button
+            submitButton.textContent = originalButtonText;
+            submitButton.disabled = false;
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          errorText.textContent = 'There was an error submitting your form. Please try again.';
+          errorMessage.style.display = 'block';
+          
+          // Reset button
+          submitButton.textContent = originalButtonText;
+          submitButton.disabled = false;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
